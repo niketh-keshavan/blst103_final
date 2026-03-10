@@ -368,6 +368,61 @@ if len(a_income) > 1 and len(d_income) > 1:
 print("=" * 70)
 
 
+# ─── 6b. Export statistics to CSV ────────────────────────────────────────────
+stats_rows = []
+
+stats_rows.append({
+    "Analysis": "Income (Atlanta)",
+    "Test": "Pearson (weighted HOLC score vs per capita income)",
+    "Statistic": f"r = {r_weighted:.4f}",
+    "p-value": f"{p_weighted:.6f}",
+})
+stats_rows.append({
+    "Analysis": "Income (Atlanta)",
+    "Test": "Spearman (weighted HOLC score vs per capita income)",
+    "Statistic": f"rs = {r_spear:.4f}",
+    "p-value": f"{p_spear:.6f}",
+})
+stats_rows.append({
+    "Analysis": "Income (Atlanta)",
+    "Test": "Pearson (redlined fraction vs per capita income)",
+    "Statistic": f"r = {r_redlined:.4f}",
+    "p-value": f"{p_redlined:.6f}",
+})
+if len(pov_analysis) > 5:
+    stats_rows.append({
+        "Analysis": "Income (Atlanta)",
+        "Test": "Pearson (weighted HOLC score vs poverty rate)",
+        "Statistic": f"r = {r_pov:.4f}",
+        "p-value": f"{p_pov:.6f}",
+    })
+if len(groups) >= 2:
+    stats_rows.append({
+        "Analysis": "Income (Atlanta)",
+        "Test": "One-way ANOVA (per capita income across HOLC grades)",
+        "Statistic": f"F = {f_stat:.4f}",
+        "p-value": f"{p_anova:.6f}",
+    })
+stats_rows.append({
+    "Analysis": "Income (Atlanta)",
+    "Test": "Point-biserial (redlined D vs other grades)",
+    "Statistic": f"r_pb = {r_pb:.4f}",
+    "p-value": f"{p_pb:.6f}",
+})
+if len(a_income) > 1 and len(d_income) > 1 and pooled_std > 0:
+    stats_rows.append({
+        "Analysis": "Income (Atlanta)",
+        "Test": "Cohen's d (Grade A vs Grade D)",
+        "Statistic": f"d = {cohens_d:.4f}",
+        "p-value": "N/A",
+    })
+
+stats_df = pd.DataFrame(stats_rows)
+stats_csv_path = os.path.join(script_dir, "holc_income_statistics.csv")
+stats_df.to_csv(stats_csv_path, index=False)
+print(f"\n  Statistics saved to {stats_csv_path}")
+
+
 # ─── 7. Visualization (separate images) ─────────────────────────────────────
 print("\nGenerating visualizations...")
 
@@ -408,7 +463,7 @@ print(f"  Saved {out1}")
 plt.show()
 
 # --- Plot 2: Box plot – income by dominant grade ---
-fig2, ax2 = plt.subplots(figsize=(10, 8))
+fig2, ax2 = plt.subplots(figsize=(10, 5))
 grade_data = []
 grade_labels = []
 grade_colors = []

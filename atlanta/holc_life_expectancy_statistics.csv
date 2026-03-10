@@ -1,0 +1,5 @@
+Analysis,Test,Statistic,p-value
+Life Expectancy (Atlanta),Pearson (weighted HOLC score vs life expectancy),r = -0.4961,0.000020
+Life Expectancy (Atlanta),Pearson (redlined fraction vs life expectancy),r = -0.3078,0.011281
+Life Expectancy (Atlanta),One-way ANOVA (life expectancy across HOLC grades),F = 6.6527,0.000565
+Life Expectancy (Atlanta),Cohen's d (Grade A vs Grade D),d = 2.1776,N/A

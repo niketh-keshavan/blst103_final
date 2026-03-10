@@ -349,6 +349,42 @@ if len(a_le) > 1 and len(d_le) > 1:
 print("=" * 65)
 
 
+# ─── 6b. Export statistics to CSV ────────────────────────────────────────────
+stats_rows = []
+
+stats_rows.append({
+    "Analysis": "Life Expectancy (Atlanta)",
+    "Test": "Pearson (weighted HOLC score vs life expectancy)",
+    "Statistic": f"r = {r_weighted:.4f}",
+    "p-value": f"{p_weighted:.6f}",
+})
+stats_rows.append({
+    "Analysis": "Life Expectancy (Atlanta)",
+    "Test": "Pearson (redlined fraction vs life expectancy)",
+    "Statistic": f"r = {r_redlined:.4f}",
+    "p-value": f"{p_redlined:.6f}",
+})
+if len(groups) >= 2:
+    stats_rows.append({
+        "Analysis": "Life Expectancy (Atlanta)",
+        "Test": "One-way ANOVA (life expectancy across HOLC grades)",
+        "Statistic": f"F = {f_stat:.4f}",
+        "p-value": f"{p_anova:.6f}",
+    })
+if len(a_le) > 1 and len(d_le) > 1 and pooled_std > 0:
+    stats_rows.append({
+        "Analysis": "Life Expectancy (Atlanta)",
+        "Test": "Cohen's d (Grade A vs Grade D)",
+        "Statistic": f"d = {cohens_d:.4f}",
+        "p-value": "N/A",
+    })
+
+stats_df = pd.DataFrame(stats_rows)
+stats_csv_path = os.path.join(script_dir, "holc_life_expectancy_statistics.csv")
+stats_df.to_csv(stats_csv_path, index=False)
+print(f"\n  Statistics saved to {stats_csv_path}")
+
+
 # ─── 7. Visualization (separate images) ─────────────────────────────────────
 print("\nGenerating visualizations...")
 
@@ -389,7 +425,7 @@ print(f"  Saved {out1}")
 plt.show()
 
 # --- Plot 2: Box plot – life expectancy by dominant grade ---
-fig2, ax2 = plt.subplots(figsize=(10, 8))
+fig2, ax2 = plt.subplots(figsize=(10, 5))
 grade_data = []
 grade_labels = []
 grade_colors = []

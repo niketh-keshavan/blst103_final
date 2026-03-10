@@ -1,0 +1,8 @@
+Analysis,Test,Statistic,p-value
+Education (Atlanta),Pearson (weighted HOLC score vs % bachelor's+),r = -0.5002,0.000000
+Education (Atlanta),Spearman (weighted HOLC score vs % bachelor's+),rs = -0.5140,0.000000
+Education (Atlanta),Pearson (weighted HOLC score vs % no HS diploma),r = 0.3842,0.000000
+Education (Atlanta),Pearson (redlined fraction vs % bachelor's+),r = -0.3818,0.000000
+Education (Atlanta),One-way ANOVA (% bachelor's+ across HOLC grades),F = 18.4748,0.000000
+Education (Atlanta),Point-biserial (redlined D vs other grades),r_pb = -0.3489,0.000004
+Education (Atlanta),"Cohen's d (Grade A vs Grade D, % bachelor's+)",d = 1.6516,N/A
